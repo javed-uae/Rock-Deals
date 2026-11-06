@@ -1,0 +1,8 @@
+{
+  "name": "Remix Rock Deals | Premium Dubai Real Estate & Off-Plan Investment",
+  "description": "Discover the most exclusive real estate deals in Dubai with Rock Deals. Specializing in high-ROI off-plan projects, luxury villas, and apartments with flexible 1% payment plans.",
+  "requestFramePermissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
