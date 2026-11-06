@@ -76,6 +76,8 @@ import { SmartImage } from './components/SmartImage';
 import { PropertyCompareModal, PropertyItem } from './components/PropertyCompareModal';
 import { PropertyCompareBar } from './components/PropertyCompareBar';
 import { LiveRatesWindow } from './components/LiveRatesWindow';
+import { GoogleMapsDubai } from './components/GoogleMapsDubai';
+import { PropertyVideoAnimator } from './components/PropertyVideoAnimator';
 
 const NavLink = ({ href, children, active = false }: { href: string; children: React.ReactNode; active?: boolean }) => (
   <a 
@@ -3342,6 +3344,13 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All Properties');
   const [showAllProperties, setShowAllProperties] = useState(false);
+  const [gmpQuotaExceeded, setGmpQuotaExceeded] = useState(false);
+
+  useEffect(() => {
+    const onQuota = () => setGmpQuotaExceeded(true);
+    window.addEventListener('gmp-quota-exceeded', onQuota);
+    return () => window.removeEventListener('gmp-quota-exceeded', onQuota);
+  }, []);
 
   // Deterministic daily rotation seed based on calendar date so top 8-10 listings rotate fresh every single day
   const dailyRotatedProperties = useMemo(() => {
@@ -3541,6 +3550,24 @@ Furnish: ${searchFurnishStatus}
         />
       ) : (
         <div className="min-h-screen bg-white selection:bg-dark selection:text-white">
+          {/* Google Maps Platform Quota Defense Banner */}
+          {gmpQuotaExceeded && (
+            <div className="bg-amber-50 border-b border-amber-200 text-amber-900 px-4 py-2.5 text-xs md:text-sm text-center sticky top-0 z-[200] shadow-sm">
+              <span>
+                Google Maps Platform quota reached. If you are the app owner, visit{' '}
+                <a
+                  href="https://developers.google.com/maps/ai/ai-studio?utm_campaign=gmp_mcp_codeassist_v1_aistudio#quota_exceeded_errors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-semibold text-amber-950 hover:text-amber-800"
+                >
+                  maps developer site
+                </a>{' '}
+                for instructions to update your account.
+              </span>
+            </div>
+          )}
+
           {/* Header */}
           <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'}`}>
         {/* Scroll Progress Bar */}
@@ -3587,6 +3614,8 @@ Furnish: ${searchFurnishStatus}
                   { name: 'Area Guide', onClick: () => setView('area-guide') },
                   { name: 'Developers', onClick: () => setView('developers') },
                   { name: 'ROI Calculator', onClick: () => setView('roi-calculator') },
+                  { name: 'AI Video', href: '#ai-video-animator', badge: 'OMNI' },
+                  { name: 'Map Radar', href: '#map' },
                   { name: 'Live Rates', href: '#market-rates' },
                   { name: 'Payment Plans', onClick: () => setView('calculator') },
                   { name: 'Enquire Now', onClick: () => setIsEnquiryModalOpen(true) },
@@ -3652,6 +3681,8 @@ Furnish: ${searchFurnishStatus}
                   { name: 'Daily News', onClick: () => setView('blog') },
                   { name: 'Developers', onClick: () => setView('developers') },
                   { name: 'ROI Calculator', onClick: () => setView('roi-calculator') },
+                  { name: 'AI Video Studio (Omni)', href: '#ai-video-animator', highlight: true },
+                  { name: 'Google Maps Radar', href: '#map' },
                   { name: 'Live Rates (Gold & BTC)', href: '#market-rates' },
                   { name: 'Payment Plans', onClick: () => setView('calculator') },
                   { name: 'Enquire Now', onClick: () => setIsEnquiryModalOpen(true) },
@@ -4487,22 +4518,25 @@ Furnish: ${searchFurnishStatus}
         </div>
       </section>
 
-      {/* Area Guide Section - Interactive Map */}
-      <section id="explore" className="px-4 sm:px-8 lg:px-24 py-10 sm:py-16 md:py-24 bg-dark">
+      {/* AI Property Cinematics - Animate Photos into Video (gemini-omni-1.2-flash via Interactions API) */}
+      <PropertyVideoAnimator />
+
+      {/* Area Guide Section - Google Maps Platform Interactive Dubai Radar */}
+      <section id="map" className="px-4 sm:px-8 lg:px-24 py-10 sm:py-16 md:py-24 bg-dark">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12 md:mb-20">
           <div className="max-w-3xl">
-            <p className="text-porsche-red text-[10px] sm:text-[12px] tracking-[0.4em] sm:tracking-[0.5em] uppercase font-black mb-3 sm:mb-5">Location Intelligence</p>
+            <p className="text-porsche-red text-[10px] sm:text-[12px] tracking-[0.4em] sm:tracking-[0.5em] uppercase font-black mb-3 sm:mb-5">Google Maps Platform Intelligence</p>
             <h2 className="text-3xl sm:text-6xl md:text-8xl lg:text-[10rem] font-display font-black text-white tracking-tighter leading-[0.85]">
               ZONE<br />
               <span className="text-porsche-red">EXPLORER.</span>
             </h2>
           </div>
           <p className="text-white/50 text-xs sm:text-sm md:text-base max-w-md leading-relaxed font-light">
-            Navigate the most prestigious investment zones in the UAE. Our interactive map provides real-time yield data and district insights.
+            Navigate the most prestigious investment zones in the UAE powered by Google Maps Platform. Interactive markers, satellite imagery, real-time yields, and off-plan project insights.
           </p>
         </div>
         
-        <DubaiMap onSearch={(filter) => setActiveFilter(filter)} />
+        <GoogleMapsDubai onSearchZone={(filter) => setActiveFilter(filter)} />
       </section>
 
       {/* Footer */}
@@ -4565,6 +4599,8 @@ Furnish: ${searchFurnishStatus}
               <ul className="space-y-5">
                 {[
                   { name: 'Properties', href: '#property-types' },
+                  { name: 'Google Maps Radar', href: '#map' },
+                  { name: 'AI Video Studio', href: '#ai-video-animator' },
                   { name: 'Live Rates (Gold & BTC)', href: '#market-rates' },
                   { name: 'Area Guide', onClick: () => setView('area-guide') },
                   { name: 'Developers', onClick: () => setView('developers') },
