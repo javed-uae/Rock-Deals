@@ -4657,7 +4657,19 @@ Furnish: ${searchFurnishStatus}
             </div>
           </div>
 
-          <div className="mt-32 pt-12 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-8">
+          {/* Executive Brand Signature - Centered below email address space with dual dividers */}
+          <div className="mt-16 sm:mt-24 pt-10 sm:pt-14 pb-8 sm:pb-12 border-t border-gray-100 flex flex-col items-center justify-center text-center">
+            <div className="max-w-[260px] sm:max-w-[320px] md:max-w-[360px] w-full px-4">
+              <img 
+                src="/assets/rock-deals-signature.png" 
+                alt="Rock Deals Executive Signature" 
+                className="w-full h-auto object-contain mx-auto transition-all duration-300 opacity-90 hover:opacity-100 select-none"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div className="pt-8 sm:pt-10 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-8">
             <p className="text-dark/20 text-[12px] tracking-widest uppercase font-black">© 2026 Rock Deals Real Estate. All Rights Reserved.</p>
             <div className="flex items-center gap-12">
               {['Privacy Policy', 'Terms', 'Cookies'].map((item) => (
