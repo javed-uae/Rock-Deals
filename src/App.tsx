@@ -77,7 +77,6 @@ import { PropertyCompareModal, PropertyItem } from './components/PropertyCompare
 import { PropertyCompareBar } from './components/PropertyCompareBar';
 import { LiveRatesWindow } from './components/LiveRatesWindow';
 import { GoogleMapsDubai } from './components/GoogleMapsDubai';
-import { PropertyVideoAnimator } from './components/PropertyVideoAnimator';
 
 const NavLink = ({ href, children, active = false }: { href: string; children: React.ReactNode; active?: boolean }) => (
   <a 
@@ -3614,7 +3613,6 @@ Furnish: ${searchFurnishStatus}
                   { name: 'Area Guide', onClick: () => setView('area-guide') },
                   { name: 'Developers', onClick: () => setView('developers') },
                   { name: 'ROI Calculator', onClick: () => setView('roi-calculator') },
-                  { name: 'AI Video', href: '#ai-video-animator', badge: 'OMNI' },
                   { name: 'Map Radar', href: '#map' },
                   { name: 'Live Rates', href: '#market-rates' },
                   { name: 'Payment Plans', onClick: () => setView('calculator') },
@@ -3681,7 +3679,6 @@ Furnish: ${searchFurnishStatus}
                   { name: 'Daily News', onClick: () => setView('blog') },
                   { name: 'Developers', onClick: () => setView('developers') },
                   { name: 'ROI Calculator', onClick: () => setView('roi-calculator') },
-                  { name: 'AI Video Studio (Omni)', href: '#ai-video-animator', highlight: true },
                   { name: 'Google Maps Radar', href: '#map' },
                   { name: 'Live Rates (Gold & BTC)', href: '#market-rates' },
                   { name: 'Payment Plans', onClick: () => setView('calculator') },
@@ -4518,9 +4515,6 @@ Furnish: ${searchFurnishStatus}
         </div>
       </section>
 
-      {/* AI Property Cinematics - Animate Photos into Video (gemini-omni-1.2-flash via Interactions API) */}
-      <PropertyVideoAnimator />
-
       {/* Area Guide Section - Google Maps Platform Interactive Dubai Radar */}
       <section id="map" className="px-4 sm:px-8 lg:px-24 py-10 sm:py-16 md:py-24 bg-dark">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12 md:mb-20">
@@ -4600,7 +4594,6 @@ Furnish: ${searchFurnishStatus}
                 {[
                   { name: 'Properties', href: '#property-types' },
                   { name: 'Google Maps Radar', href: '#map' },
-                  { name: 'AI Video Studio', href: '#ai-video-animator' },
                   { name: 'Live Rates (Gold & BTC)', href: '#market-rates' },
                   { name: 'Area Guide', onClick: () => setView('area-guide') },
                   { name: 'Developers', onClick: () => setView('developers') },
