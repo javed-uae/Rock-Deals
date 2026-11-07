@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-// AI Studio reverse proxy routes external traffic to port 3000
-const PORT = 3000;
+// In Cloud Run production deployment, Cloud Run injects process.env.PORT. Fallback to 3000 for local preview.
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const distPath = path.join(__dirname, 'dist');
 
 // Body parsers
